@@ -37,7 +37,7 @@ jobs:
           username: admin
           password: ${{ secrets.password }}
           format: maven2
-          repository: maven-public
+          repository: maven-releases
           coordinates: groupId=hosted artifactId=maven-app version=1.0.0
           assets: extension=jar
           filename: ./target/maven-app-1.0.0.jar
