@@ -1,0 +1,34 @@
+name: Build and Push to Artifactory
+
+on: 
+  push:
+    branches: 
+      - master
+      
+jobs:
+  maven_nexus:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with: 
+          java-version: '1.8'
+          
+      - name: Build Maven
+        run: mvn package --file pom.xml
+        
+      - name: Nexus Repo Publish
+        uses: sonatype-nexus-community/nexus-repo-github-action@master
+        with:
+          serverUrl: https://35.158.97.201:8081
+          username: admin
+          password: ${{ secrets.password }}
+          format: maven2
+          repository: maven-public
+          coordinates: artifactId=maven-app version=1.0.0
+          assets: extension=jar
+          filename: ./target/maven-app-1.0.0.jar
