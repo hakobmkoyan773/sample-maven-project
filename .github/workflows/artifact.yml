@@ -12,14 +12,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-
+      
+      - name: debug
+        run: ls
+      
       - name: Set up JDK
         uses: actions/setup-java@v1
         with: 
           java-version: '1.8'
           
+      - name: debug
+        run: ls          
+          
       - name: Build Maven
         run: mvn package --file pom.xml
+        
+      - name: debug
+        run: ls ./target        
         
       - name: Nexus Repo Publish
         uses: sonatype-nexus-community/nexus-repo-github-action@master
